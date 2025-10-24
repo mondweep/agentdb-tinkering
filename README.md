@@ -131,6 +131,9 @@ agentdb-tinkering/
 ├── script.js               # Interactive features
 ├── README.md               # This file
 ├── LEARNING_PLAN.md        # Detailed module breakdown
+├── AGENTDB-SKILL.md        # Learning curriculum (Claude SKILL format)
+├── agentdb-export.json     # Machine-readable learning plan export
+├── .gitignore              # Git ignore configuration
 └── projects/               # Individual project folders (coming soon)
     ├── module-1-portfolio/
     ├── module-2-weather/
@@ -197,6 +200,8 @@ const results = await db.search({
 ## 📖 Documentation
 
 - [Detailed Learning Plan](LEARNING_PLAN.md) - Complete module breakdown
+- [AgentDB Learning Curriculum](AGENTDB-SKILL.md) - Structured learning guide in Claude SKILL format
+- [Learning Plan Export](agentdb-export.json) - Machine-readable JSON export with all modules and patterns
 - [AgentDB Documentation](https://agentdb.dev/docs) - Official docs
 - [Project Wiki](https://github.com/mondweep/agentdb-tinkering/wiki) - Additional resources
 

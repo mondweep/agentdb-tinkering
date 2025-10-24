@@ -1,0 +1,222 @@
+{
+  "database_info": {
+    "created": "2025-10-24",
+    "purpose": "Learn by Building - Progressive Project-Based Learning Plan",
+    "total_modules": 9,
+    "backend": "native",
+    "features": ["query_cache", "vector_similarity_search"]
+  },
+  "learning_modules": [
+    {
+      "id": "module-1-web-basics",
+      "phase": "Foundation",
+      "title": "Personal Portfolio Website",
+      "skills": ["HTML", "CSS", "JavaScript", "Responsive Design", "Git"],
+      "project": "Create a multi-page portfolio showcasing your work with interactive elements",
+      "duration": "2 weeks",
+      "difficulty": "Beginner",
+      "description": "Build your own portfolio website from scratch",
+      "deliverables": ["Live website", "GitHub repository", "Mobile-responsive design"],
+      "prerequisites": "None",
+      "learning_outcomes": [
+        "Understand HTML structure and semantics",
+        "Master CSS layout (Flexbox, Grid)",
+        "Learn basic JavaScript interactivity",
+        "Implement responsive design principles",
+        "Practice version control with Git"
+      ]
+    },
+    {
+      "id": "module-2-api-integration",
+      "phase": "Foundation",
+      "title": "Weather Dashboard",
+      "skills": ["REST APIs", "JSON", "Async JavaScript", "Error Handling"],
+      "project": "Build a weather app that fetches real-time data from OpenWeatherMap API",
+      "duration": "1 week",
+      "difficulty": "Beginner",
+      "description": "Learn to integrate external APIs into your applications",
+      "deliverables": ["Functional weather dashboard", "API error handling", "Loading states"],
+      "prerequisites": "Module 1",
+      "learning_outcomes": [
+        "Understand REST API concepts",
+        "Master async/await and Promises",
+        "Handle API errors gracefully",
+        "Parse and display JSON data",
+        "Implement loading and error states"
+      ]
+    },
+    {
+      "id": "module-3-backend-basics",
+      "phase": "Full-Stack Foundation",
+      "title": "Task Manager API",
+      "skills": ["Node.js", "Express", "RESTful Design", "MongoDB"],
+      "project": "Build a backend API for managing tasks with CRUD operations",
+      "duration": "2 weeks",
+      "difficulty": "Intermediate",
+      "description": "Create your first backend server and database",
+      "deliverables": ["REST API", "Database integration", "API documentation"],
+      "prerequisites": "Module 2",
+      "learning_outcomes": [
+        "Set up Node.js and Express server",
+        "Design RESTful API endpoints",
+        "Connect to MongoDB database",
+        "Implement CRUD operations",
+        "Write API documentation"
+      ]
+    },
+    {
+      "id": "module-4-authentication",
+      "phase": "Full-Stack Foundation",
+      "title": "User Authentication System",
+      "skills": ["JWT", "bcrypt", "Session Management", "Security"],
+      "project": "Add secure authentication to your Task Manager",
+      "duration": "1.5 weeks",
+      "difficulty": "Intermediate",
+      "description": "Implement user registration, login, and protected routes",
+      "deliverables": ["Secure authentication", "Protected routes", "Password hashing"],
+      "prerequisites": "Module 3",
+      "learning_outcomes": [
+        "Implement JWT authentication",
+        "Hash passwords with bcrypt",
+        "Create protected API routes",
+        "Manage user sessions",
+        "Apply security best practices"
+      ]
+    },
+    {
+      "id": "module-5-fullstack-integration",
+      "phase": "Full-Stack Foundation",
+      "title": "Complete Task Manager App",
+      "skills": ["React", "State Management", "Frontend-Backend Integration"],
+      "project": "Build a React frontend that connects to your Task Manager API",
+      "duration": "2 weeks",
+      "difficulty": "Intermediate",
+      "description": "Create a full-stack application with React and your API",
+      "deliverables": ["React frontend", "API integration", "User authentication flow"],
+      "prerequisites": "Module 4",
+      "learning_outcomes": [
+        "Build React components",
+        "Manage application state",
+        "Connect frontend to backend",
+        "Implement authentication flow",
+        "Handle forms and validation"
+      ]
+    },
+    {
+      "id": "module-6-vector-databases",
+      "phase": "Advanced Concepts",
+      "title": "Document Search Engine",
+      "skills": ["Vector Embeddings", "AgentDB", "Semantic Search"],
+      "project": "Build a semantic search engine using vector embeddings",
+      "duration": "2 weeks",
+      "difficulty": "Advanced",
+      "description": "Learn vector databases and semantic search with AgentDB",
+      "deliverables": ["Semantic search engine", "Vector database", "Embedding generation"],
+      "prerequisites": "Module 5",
+      "learning_outcomes": [
+        "Understand vector embeddings",
+        "Implement semantic search",
+        "Use AgentDB for vector storage",
+        "Generate text embeddings",
+        "Optimize search performance"
+      ]
+    },
+    {
+      "id": "module-7-ai-integration",
+      "phase": "Advanced Concepts",
+      "title": "AI-Powered Chat Application",
+      "skills": ["LLM APIs", "Prompt Engineering", "Real-time Communication"],
+      "project": "Build a chat app with AI assistant using Claude or GPT",
+      "duration": "2 weeks",
+      "difficulty": "Advanced",
+      "description": "Integrate large language models into your applications",
+      "deliverables": ["AI chat interface", "Conversation history", "Prompt templates"],
+      "prerequisites": "Module 6",
+      "learning_outcomes": [
+        "Integrate LLM APIs",
+        "Master prompt engineering",
+        "Implement streaming responses",
+        "Store conversation history",
+        "Handle rate limiting"
+      ]
+    },
+    {
+      "id": "module-8-deployment",
+      "phase": "Production",
+      "title": "Deploy Your Applications",
+      "skills": ["Docker", "CI/CD", "Cloud Hosting", "Monitoring"],
+      "project": "Deploy all your projects to production environments",
+      "duration": "1.5 weeks",
+      "difficulty": "Advanced",
+      "description": "Learn to deploy and maintain production applications",
+      "deliverables": ["Dockerized apps", "CI/CD pipeline", "Monitoring setup"],
+      "prerequisites": "Module 7",
+      "learning_outcomes": [
+        "Containerize applications with Docker",
+        "Set up CI/CD pipelines",
+        "Deploy to cloud platforms",
+        "Implement monitoring and logging",
+        "Configure domain and SSL"
+      ]
+    },
+    {
+      "id": "module-9-capstone",
+      "phase": "Production",
+      "title": "Capstone Project",
+      "skills": ["All Previous Skills", "System Design", "Product Development"],
+      "project": "Design and build your own full-stack application idea",
+      "duration": "4 weeks",
+      "difficulty": "Advanced",
+      "description": "Apply everything you've learned to build your own product",
+      "deliverables": ["Custom application", "Documentation", "Production deployment"],
+      "prerequisites": "Module 8",
+      "learning_outcomes": [
+        "Design complex systems",
+        "Make architectural decisions",
+        "Build production-ready apps",
+        "Write comprehensive documentation",
+        "Present your work professionally"
+      ]
+    }
+  ],
+  "reasoning_patterns": [
+    {
+      "pattern_id": "progressive-learning",
+      "description": "Build projects of increasing complexity to solidify understanding",
+      "success_rate": 0.95,
+      "metadata": {
+        "domain": "education",
+        "complexity": "medium",
+        "learning_source": "success"
+      }
+    },
+    {
+      "pattern_id": "practical-first",
+      "description": "Learn by building real projects rather than isolated exercises",
+      "success_rate": 0.92,
+      "metadata": {
+        "domain": "education",
+        "complexity": "simple",
+        "learning_source": "success"
+      }
+    },
+    {
+      "pattern_id": "incremental-complexity",
+      "description": "Add new concepts gradually while reinforcing previous knowledge",
+      "success_rate": 0.88,
+      "metadata": {
+        "domain": "education",
+        "complexity": "medium",
+        "learning_source": "adaptation"
+      }
+    }
+  ],
+  "total_duration": "18.5 weeks",
+  "skill_tree": {
+    "frontend": ["HTML", "CSS", "JavaScript", "React", "Responsive Design"],
+    "backend": ["Node.js", "Express", "RESTful APIs", "MongoDB"],
+    "security": ["JWT", "bcrypt", "Authentication", "Authorization"],
+    "advanced": ["Vector Databases", "AI Integration", "Embeddings", "Semantic Search"],
+    "devops": ["Git", "Docker", "CI/CD", "Cloud Hosting", "Monitoring"]
+  }
+}

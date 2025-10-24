@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AgentDB Learning Journey - Building by Doing">
+    <title>AgentDB Learning Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">AgentDB Learning</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#modules">Modules</a></li>
+                <li><a href="#progress">Progress</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Learn by Building</h1>
+                <p class="hero-subtitle">A Practical Journey Through AgentDB & Modern Web Development</p>
+                <p class="hero-description">
+                    This portfolio documents my hands-on learning experience with AgentDB, 
+                    vector databases, and AI-powered reasoning systems.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#modules" class="btn btn-primary">View Learning Modules</a>
+                    <a href="#progress" class="btn btn-secondary">Track Progress</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About This Journey</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Learning Philosophy</h3>
+                    <p>
+                        This project represents a structured approach to learning modern technologies 
+                        through practical implementation. Each module builds on the previous one, 
+                        creating a comprehensive understanding of vector databases, AI reasoning, 
+                        and full-stack development.
+                    </p>
+                    <h3>Technologies Used</h3>
+                    <ul class="tech-list">
+                        <li><strong>AgentDB:</strong> Vector database with reasoning capabilities</li>
+                        <li><strong>Vector Search:</strong> K-NN, cosine similarity, embeddings</li>
+                        <li><strong>ReasoningBank:</strong> Pattern storage and retrieval</li>
+                        <li><strong>Web Technologies:</strong> HTML5, CSS3, JavaScript ES6+</li>
+                        <li><strong>Backend:</strong> Node.js, Python, REST APIs</li>
+                    </ul>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="8">0</div>
+                        <div class="stat-label">Learning Modules</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="16">0</div>
+                        <div class="stat-label">Weeks Duration</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="12">0</div>
+                        <div class="stat-label">Projects Built</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Modules Section -->
+    <section id="modules" class="modules">
+        <div class="container">
+            <h2 class="section-title">Learning Modules</h2>
+            <p class="section-subtitle">Progressive projects from foundation to advanced implementation</p>
+            
+            <div class="modules-grid">
+                <!-- Module 1 -->
+                <div class="module-card" data-difficulty="beginner">
+                    <div class="module-header">
+                        <span class="module-badge beginner">Beginner</span>
+                        <span class="module-phase">Foundation</span>
+                    </div>
+                    <h3 class="module-title">Module 1: Personal Portfolio Website</h3>
+                    <p class="module-description">
+                        Build a multi-page portfolio showcasing work with interactive elements. 
+                        Foundation in HTML, CSS, JavaScript, and responsive design.
+                    </p>
+                    <div class="module-skills">
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Responsive Design</span>
+                        <span class="skill-tag">Git</span>
+                    </div>
+                    <div class="module-footer">
+                        <span class="module-duration">⏱ 2 weeks</span>
+                        <button class="btn-small">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="module-card" data-difficulty="beginner">
+                    <div class="module-header">
+                        <span class="module-badge beginner">Beginner</span>
+                        <span class="module-phase">Integration</span>
+                    </div>
+                    <h3 class="module-title">Module 2: Weather Dashboard with API</h3>
+                    <p class="module-description">
+                        Create a weather app integrating external APIs, handling async operations, 
+                        and implementing data visualization.
+                    </p>
+                    <div class="module-skills">
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">Async/Await</span>
+                        <span class="skill-tag">JSON</span>
+                        <span class="skill-tag">Charts</span>
+                        <span class="skill-tag">Error Handling</span>
+                    </div>
+                    <div class="module-footer">
+                        <span class="module-duration">⏱ 2 weeks</span>
+                        <button class="btn-small">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="module-card" data-difficulty="intermediate">
+                    <div class="module-header">
+                        <span class="module-badge intermediate">Intermediate</span>
+                        <span class="module-phase">Backend Basics</span>
+                    </div>
+                    <h3 class="module-title">Module 3: Task Manager with Backend</h3>
+                    <p class="module-description">
+                        Build a full-stack task management app with Node.js backend, 
+                        database integration, and authentication.
+                    </p>
+                    <div class="module-skills">
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Express</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">JWT Auth</span>
+                        <span class="skill-tag">RESTful API</span>
+                    </div>
+                    <div class="module-footer">
+                        <span class="module-duration">⏱ 2 weeks</span>
+                        <button class="btn-small">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="module-card" data-difficulty="intermediate">
+                    <div class="module-header">
+                        <span class="module-badge intermediate">Intermediate</span>
+                        <span class="module-phase">AgentDB Foundation</span>
+                    </div>
+                    <h3 class="module-title">Module 4: Vector Search Engine</h3>
+                    <p class="module-description">
+                        Introduction to AgentDB! Build a semantic search engine using vector 
+                        embeddings and similarity search.
+                    </p>
+                    <div class="module-skills">
+                        <span class="skill-tag">AgentDB</span>
+                        <span class="skill-tag">Vector Embeddings</span>
+                        <span class="skill-tag">K-NN Search</span>
+                        <span class="skill-tag">Cosine Similarity</span>
+                        <span class="skill-tag">OpenAI API</span>
+                    </div>
+                    <div class="module-footer">
+                        <span class="module-duration">⏱ 2 weeks</span>
+                        <button class="btn-small">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Module 5 -->
+                <div class="module-card" data-difficulty="advanced">
+                    <div class="module-header">
+                        <span class="module-badge advanced">Advanced</span>
+                        <span class="module-phase">AI Integration</span>
+                    </div>
+                    <h3 class="module-title">Module 5: AI Document Assistant</h3>
+                    <p class="module-description">
+                        Create an intelligent document assistant using RAG (Retrieval-Augmented Generation) 
+                        with AgentDB and LLMs.
+                    </p>
+                    <div class="module-skills">
+                        <span class="skill-tag">RAG Pipeline</span>
+                        <span class="skill-tag">LLM Integration</span>
+                        <span class="skill-tag">Document Processing</span>
+                        <span class="skill-tag">Vector Storage</span>
+                        <span class="skill-tag">Prompt Engineering</span>
+                    </div>
+                    <div class="module-footer">
+                        <span class="module-duration">⏱ 2 weeks</span>
+                        <button class="btn-small">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Module 6 -->
+                <div class="module-card" data-difficulty="advanced">
+                    <div class="module-header">
+                        <span class="module-badge advanced">Advanced</span>
+                        <span class="module-phase">ReasoningBank</span>
+                    </div>
+                    <h3 class="module-title">Module 6: Learning Pattern System</h3>
+                    <p class="module-description">
+                        Implement ReasoningBank to store, retrieve, and learn from problem-solving 
+                        patterns with metadata tracking.
+                    </p>
+                    <div class="module-skills">
+                        <span class="skill-tag">ReasoningBank</span>
+                        <span class="skill-tag">Pattern Storage</span>
+                        <span class="skill-tag">Metadata</span>
+                        <span class="skill-tag">Success Tracking</span>
+                        <span class="skill-tag">Analytics</span>
+                    </div>
+                    <div class="module-footer">
+                        <span class="module-duration">⏱ 2 weeks</span>
+                        <button class="btn-small">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Module 7 -->
+                <div class="module-card" data-difficulty="advanced">
+                    <div class="module-header">
+                        <span class="module-badge advanced">Advanced</span>
+                        <span class="module-phase">Performance</span>
+                    </div>
+                    <h3 class="module-title">Module 7: High-Performance Vector DB</h3>
+                    <p class="module-description">
+                        Optimize AgentDB with quantization, caching, and batch operations. 
+                        Learn performance tuning and scalability.
+                    </p>
+                    <div class="module-skills">
+                        <span class="skill-tag">Quantization</span>
+                        <span class="skill-tag">Query Caching</span>
+                        <span class="skill-tag">Batch Processing</span>
+                        <span class="skill-tag">Performance Tuning</span>
+                        <span class="skill-tag">Benchmarking</span>
+                    </div>
+                    <div class="module-footer">
+                        <span class="module-duration">⏱ 2 weeks</span>
+                        <button class="btn-small">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Module 8 -->
+                <div class="module-card" data-difficulty="expert">
+                    <div class="module-header">
+                        <span class="module-badge expert">Expert</span>
+                        <span class="module-phase">Capstone</span>
+                    </div>
+                    <h3 class="module-title">Module 8: AI-Powered Code Assistant</h3>
+                    <p class="module-description">
+                        Capstone project: Build a full-featured code assistant combining all learned 
+                        concepts with AgentDB at its core.
+                    </p>
+                    <div class="module-skills">
+                        <span class="skill-tag">Full-Stack</span>
+                        <span class="skill-tag">Code Analysis</span>
+                        <span class="skill-tag">AI Integration</span>
+                        <span class="skill-tag">Real-time Updates</span>
+                        <span class="skill-tag">Production Deployment</span>
+                    </div>
+                    <div class="module-footer">
+                        <span class="module-duration">⏱ 2 weeks</span>
+                        <button class="btn-small">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section id="progress" class="progress-section">
+        <div class="container">
+            <h2 class="section-title">Learning Progress</h2>
+            <p class="section-subtitle">Track completion and skill development</p>
+            
+            <div class="progress-overview">
+                <div class="progress-card">
+                    <h3>Overall Completion</h3>
+                    <div class="progress-circle" data-progress="25">
+                        <svg viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                            <circle class="progress-fill" cx="50" cy="50" r="45"></circle>
+                        </svg>
+                        <div class="progress-text">25%</div>
+                    </div>
+                    <p>2 of 8 modules completed</p>
+                </div>
+
+                <div class="skills-progress">
+                    <h3>Skill Development</h3>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span>Web Fundamentals</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="bar">
+                            <div class="bar-fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span>Backend Development</span>
+                            <span>60%</span>
+                        </div>
+                        <div class="bar">
+                            <div class="bar-fill" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span>AgentDB & Vector Search</span>
+                            <span>40%</span>
+                        </div>
+                        <div class="bar">
+                            <div class="bar-fill" style="width: 40%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span>AI Integration</span>
+                            <span>20%</span>
+                        </div>
+                        <div class="bar">
+                            <div class="bar-fill" style="width: 20%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <h3>Project Timeline</h3>
+                <div class="timeline-container">
+                    <div class="timeline-item completed">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>Week 1-2: Portfolio Website</h4>
+                            <p>✅ Completed: Built responsive portfolio with interactive features</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item completed">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>Week 3-4: Weather Dashboard</h4>
+                            <p>✅ Completed: Integrated weather API with data visualization</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item current">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>Week 5-6: Task Manager</h4>
+                            <p>🔄 In Progress: Building full-stack application with authentication</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item upcoming">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>Week 7-8: Vector Search Engine</h4>
+                            <p>⏳ Upcoming: Introduction to AgentDB and vector embeddings</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Questions about the learning journey? Let's connect!</p>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Learning Together</h3>
+                    <p>
+                        This project is open-source and designed to help others learn by building. 
+                        Feel free to fork, contribute, or ask questions!
+                    </p>
+                    <ul class="contact-links">
+                        <li>
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                            <a href="https://github.com/mondweep/agentdb-tinkering">GitHub Repository</a>
+                        </li>
+                        <li>
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                            <span>Share Your Progress: #AgentDBLearning</span>
+                        </li>
+                        <li>
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <span>Questions? Open an issue on GitHub</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AgentDB Learning</h3>
+                    <p>A practical, project-based approach to mastering modern technologies.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#modules">Learning Modules</a></li>
+                        <li><a href="#progress">Track Progress</a></li>
+                        <li><a href="https://github.com/mondweep/agentdb-tinkering">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">AgentDB Documentation</a></li>
+                        <li><a href="#">Learning Roadmap</a></li>
+                        <li><a href="#">Community Forum</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AgentDB Learning Journey. Open Source Project.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

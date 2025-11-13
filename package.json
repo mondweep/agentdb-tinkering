@@ -5,6 +5,7 @@
   "main": "hackathon-dao/src/core/dao.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node hackathon-dao/server.js",
     "example:basic": "node hackathon-dao/examples/basic-usage.js",
     "example:git": "node hackathon-dao/examples/git-analysis-example.js"
   },
@@ -18,6 +19,8 @@
   "dependencies": {
     "agentdb": "^1.6.1",
     "claude-flow": "^2.7.35",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
     "research-swarm": "^1.2.2"
   }
 }

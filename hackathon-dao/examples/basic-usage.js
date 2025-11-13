@@ -192,7 +192,14 @@ async function runExample() {
 
   await dao.vote(milestoneProposal.id, alice.id, 'for', 'Milestone completed successfully');
   await dao.vote(milestoneProposal.id, bob.id, 'for', 'All criteria met');
-  await dao.vote(milestoneProposal.id, diana.id, 'for', 'Great work team!');
+
+  // Check if proposal is still active before third vote
+  const proposalStatus = await dao.proposals.getProposal(milestoneProposal.id);
+  if (proposalStatus.status === 'active') {
+    await dao.vote(milestoneProposal.id, diana.id, 'for', 'Great work team!');
+  } else {
+    console.log(`  Proposal already finalized with status: ${proposalStatus.status}`);
+  }
 
   // Create proposal to verify a contribution
   const verificationProposal = await dao.proposals.createContributionVerificationProposal(
@@ -203,7 +210,33 @@ async function runExample() {
 
   await dao.vote(verificationProposal.id, alice.id, 'abstain', 'My own contribution');
   await dao.vote(verificationProposal.id, bob.id, 'for', 'Quality work');
-  await dao.vote(verificationProposal.id, diana.id, 'for', 'Verified');
+
+  // Check again for verification proposal
+  const verifyStatus = await dao.proposals.getProposal(verificationProposal.id);
+  if (verifyStatus.status === 'active') {
+    await dao.vote(verificationProposal.id, diana.id, 'for', 'Verified');
+  } else {
+    console.log(`  Proposal already finalized with status: ${verifyStatus.status}`);
+  }
+
+  // Execute passed proposals
+  console.log('\n⚙️  Executing approved proposals...\n');
+
+  if (proposalStatus.status === 'passed') {
+    await dao.proposals.executeProposal(milestoneProposal.id);
+  }
+
+  if (verifyStatus.status === 'passed') {
+    await dao.proposals.executeProposal(verificationProposal.id);
+  }
+
+  // Manually verify all contributions for the demo
+  const allContributions = await dao.contributions.getContributionsByTeam(team1.id);
+  for (const contrib of allContributions) {
+    if (!contrib.verified) {
+      await dao.contributions.verifyContribution(contrib.id, alice.id);
+    }
+  }
 
   // Create and distribute royalties
   console.log('\n💰 Creating royalty distribution...\n');
@@ -229,11 +262,21 @@ async function runExample() {
     console.log('\n🗳️  Voting on royalty distribution...\n');
     await dao.vote(royaltyResult.proposal.id, alice.id, 'for', 'Fair distribution');
     await dao.vote(royaltyResult.proposal.id, bob.id, 'for', 'Approved');
-    await dao.vote(royaltyResult.proposal.id, diana.id, 'for', 'Looks good');
+
+    // Check if still active before third vote
+    const royaltyProposalStatus = await dao.proposals.getProposal(royaltyResult.proposal.id);
+    if (royaltyProposalStatus.status === 'active') {
+      await dao.vote(royaltyResult.proposal.id, diana.id, 'for', 'Looks good');
+    } else {
+      console.log(`  Proposal already finalized with status: ${royaltyProposalStatus.status}`);
+    }
 
     // Execute distribution after approval
-    await dao.proposals.executeProposal(royaltyResult.proposal.id);
-    await dao.royalty.executeDistribution(royaltyResult.pool.id);
+    const finalProposalStatus = await dao.proposals.getProposal(royaltyResult.proposal.id);
+    if (finalProposalStatus.status === 'passed') {
+      await dao.proposals.executeProposal(royaltyResult.proposal.id);
+      await dao.royalty.executeDistribution(royaltyResult.pool.id);
+    }
   }
 
   // Display comprehensive statistics

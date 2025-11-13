@@ -153,7 +153,7 @@ initializeSampleData();
 // ============================================================================
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     message: 'Hackathon DAO API Lite is running',
@@ -163,7 +163,7 @@ app.get('/health', (req, res) => {
 });
 
 // DAO Info
-app.get('/dao', (req, res) => {
+app.get('/api/dao', (req, res) => {
   try {
     const stats = {
       ...data.dao,
@@ -180,7 +180,7 @@ app.get('/dao', (req, res) => {
 });
 
 // Teams
-app.get('/teams', (req, res) => {
+app.get('/api/teams', (req, res) => {
   try {
     res.json(data.teams);
   } catch (error) {
@@ -188,7 +188,7 @@ app.get('/teams', (req, res) => {
   }
 });
 
-app.get('/teams/leaderboard', (req, res) => {
+app.get('/api/teams/leaderboard', (req, res) => {
   try {
     const leaderboard = [...data.teams]
       .sort((a, b) => b.totalScore - a.totalScore)
@@ -203,7 +203,7 @@ app.get('/teams/leaderboard', (req, res) => {
   }
 });
 
-app.post('/teams', (req, res) => {
+app.post('/api/teams', (req, res) => {
   try {
     const team = {
       id: `team_${data.teams.length + 1}`,
@@ -220,7 +220,7 @@ app.post('/teams', (req, res) => {
   }
 });
 
-app.get('/teams/:id', (req, res) => {
+app.get('/api/teams/:id', (req, res) => {
   try {
     const team = data.teams.find(t => t.id === req.params.id);
     if (!team) {
@@ -245,7 +245,7 @@ app.get('/teams/:id', (req, res) => {
   }
 });
 
-app.get('/teams/:id/stats', (req, res) => {
+app.get('/api/teams/:id/stats', (req, res) => {
   try {
     const team = data.teams.find(t => t.id === req.params.id);
     if (!team) {
@@ -257,7 +257,7 @@ app.get('/teams/:id/stats', (req, res) => {
   }
 });
 
-app.post('/teams/:teamId/members/:memberId', (req, res) => {
+app.post('/api/teams/:teamId/members/:memberId', (req, res) => {
   try {
     const member = data.members.find(m => m.id === req.params.memberId);
     const team = data.teams.find(t => t.id === req.params.teamId);
@@ -278,7 +278,7 @@ app.post('/teams/:teamId/members/:memberId', (req, res) => {
 });
 
 // Members
-app.get('/members', (req, res) => {
+app.get('/api/members', (req, res) => {
   try {
     res.json(data.members);
   } catch (error) {
@@ -286,7 +286,7 @@ app.get('/members', (req, res) => {
   }
 });
 
-app.get('/members/leaderboard', (req, res) => {
+app.get('/api/members/leaderboard', (req, res) => {
   try {
     const leaderboard = [...data.members]
       .sort((a, b) => b.totalScore - a.totalScore)
@@ -301,7 +301,7 @@ app.get('/members/leaderboard', (req, res) => {
   }
 });
 
-app.post('/members', (req, res) => {
+app.post('/api/members', (req, res) => {
   try {
     const member = {
       id: `member_${data.members.length + 1}`,
@@ -319,7 +319,7 @@ app.post('/members', (req, res) => {
   }
 });
 
-app.get('/members/:id', (req, res) => {
+app.get('/api/members/:id', (req, res) => {
   try {
     const member = data.members.find(m => m.id === req.params.id);
     if (!member) {
@@ -345,7 +345,7 @@ app.get('/members/:id', (req, res) => {
 });
 
 // Contributions
-app.get('/contributions', (req, res) => {
+app.get('/api/contributions', (req, res) => {
   try {
     const contributions = data.contributions.slice(0, 100);
     res.json(contributions);
@@ -354,7 +354,7 @@ app.get('/contributions', (req, res) => {
   }
 });
 
-app.get('/contributions/team/:teamId', (req, res) => {
+app.get('/api/contributions/team/:teamId', (req, res) => {
   try {
     const contributions = data.contributions.filter(c => c.teamId === req.params.teamId);
     res.json(contributions);
@@ -363,7 +363,7 @@ app.get('/contributions/team/:teamId', (req, res) => {
   }
 });
 
-app.get('/contributions/member/:memberId', (req, res) => {
+app.get('/api/contributions/member/:memberId', (req, res) => {
   try {
     const contributions = data.contributions.filter(c => c.memberId === req.params.memberId);
     res.json(contributions);
@@ -372,7 +372,7 @@ app.get('/contributions/member/:memberId', (req, res) => {
   }
 });
 
-app.post('/contributions', (req, res) => {
+app.post('/api/contributions', (req, res) => {
   try {
     const contribution = {
       id: `contrib_${data.contributions.length + 1}`,
@@ -401,7 +401,7 @@ app.post('/contributions', (req, res) => {
   }
 });
 
-app.post('/contributions/:id/verify', (req, res) => {
+app.post('/api/contributions/:id/verify', (req, res) => {
   try {
     const contribution = data.contributions.find(c => c.id === req.params.id);
     if (!contribution) {
@@ -419,7 +419,7 @@ app.post('/contributions/:id/verify', (req, res) => {
 });
 
 // Proposals
-app.get('/proposals', (req, res) => {
+app.get('/api/proposals', (req, res) => {
   try {
     const activeProposals = data.proposals.filter(p => p.status === 'active');
     res.json(activeProposals);
@@ -428,7 +428,7 @@ app.get('/proposals', (req, res) => {
   }
 });
 
-app.get('/proposals/:id', (req, res) => {
+app.get('/api/proposals/:id', (req, res) => {
   try {
     const proposal = data.proposals.find(p => p.id === req.params.id);
     if (!proposal) {
@@ -449,7 +449,7 @@ app.get('/proposals/:id', (req, res) => {
   }
 });
 
-app.post('/proposals', (req, res) => {
+app.post('/api/proposals', (req, res) => {
   try {
     const proposal = {
       id: `proposal_${data.proposals.length + 1}`,
@@ -464,7 +464,7 @@ app.post('/proposals', (req, res) => {
   }
 });
 
-app.post('/proposals/:id/vote', (req, res) => {
+app.post('/api/proposals/:id/vote', (req, res) => {
   try {
     const proposal = data.proposals.find(p => p.id === req.params.id);
     if (!proposal) {
@@ -489,7 +489,7 @@ app.post('/proposals/:id/vote', (req, res) => {
 });
 
 // Royalties
-app.get('/royalties/team/:teamId', (req, res) => {
+app.get('/api/royalties/team/:teamId', (req, res) => {
   try {
     const pools = data.royaltyPools.filter(p => p.teamId === req.params.teamId);
     res.json(pools);
@@ -498,7 +498,7 @@ app.get('/royalties/team/:teamId', (req, res) => {
   }
 });
 
-app.get('/royalties/member/:memberId', (req, res) => {
+app.get('/api/royalties/member/:memberId', (req, res) => {
   try {
     const royalties = {
       memberId: req.params.memberId,
@@ -511,7 +511,7 @@ app.get('/royalties/member/:memberId', (req, res) => {
   }
 });
 
-app.get('/royalties/pool/:poolId', (req, res) => {
+app.get('/api/royalties/pool/:poolId', (req, res) => {
   try {
     const pool = data.royaltyPools.find(p => p.id === req.params.poolId);
     if (!pool) {
@@ -523,7 +523,7 @@ app.get('/royalties/pool/:poolId', (req, res) => {
   }
 });
 
-app.post('/royalties/distribute', (req, res) => {
+app.post('/api/royalties/distribute', (req, res) => {
   try {
     const pool = {
       id: `pool_${data.royaltyPools.length + 1}`,

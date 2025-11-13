@@ -20,19 +20,30 @@ let dao;
 
 async function getDAO() {
   if (!dao) {
-    dao = new HackathonDAO({
-      name: "Global Hackathon Platform",
-      startDate: Date.now() - (30 * 24 * 60 * 60 * 1000),
-      endDate: Date.now() + (60 * 24 * 60 * 60 * 1000),
-      filename: ':memory:' // Use in-memory database for serverless
-    });
+    try {
+      console.log('Initializing DAO...');
+      dao = new HackathonDAO({
+        name: "Global Hackathon Platform",
+        startDate: Date.now() - (30 * 24 * 60 * 60 * 1000),
+        endDate: Date.now() + (60 * 24 * 60 * 60 * 1000),
+        filename: ':memory:' // Use in-memory database for serverless
+      });
 
-    await dao.initialize();
+      console.log('DAO instance created, initializing database...');
+      await dao.initialize();
+      console.log('DAO initialized successfully');
 
-    // Seed sample data
-    const teams = await dao.teams.listTeams();
-    if (teams.length === 0) {
-      await seedSampleData(dao);
+      // Seed sample data
+      const teams = await dao.teams.listTeams();
+      console.log(`Found ${teams.length} existing teams`);
+      if (teams.length === 0) {
+        console.log('Seeding sample data...');
+        await seedSampleData(dao);
+        console.log('Sample data seeded successfully');
+      }
+    } catch (error) {
+      console.error('Failed to initialize DAO:', error);
+      throw new Error(`DAO initialization failed: ${error.message}`);
     }
   }
   return dao;

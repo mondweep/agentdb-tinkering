@@ -117,6 +117,16 @@ async function seedSampleData(dao) {
 // API ROUTES
 // ============================================================================
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    message: 'Hackathon DAO API is running',
+    timestamp: new Date().toISOString(),
+    daoInitialized: !!dao
+  });
+});
+
 // DAO Info
 app.get('/dao', async (req, res) => {
   try {
@@ -370,5 +380,29 @@ app.post('/royalties/distribute', async (req, res) => {
   }
 });
 
+// Error handler
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(500).json({
+    error: err.message,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
+});
+
 // Export handler for Netlify
-exports.handler = serverless(app);
+const handler = serverless(app);
+
+exports.handler = async (event, context) => {
+  try {
+    return await handler(event, context);
+  } catch (error) {
+    console.error('Function error:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        error: 'Function initialization error',
+        message: error.message
+      })
+    };
+  }
+};

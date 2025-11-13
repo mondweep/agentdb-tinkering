@@ -1,148 +1,178 @@
 /**
- * Netlify Serverless Function for Hackathon DAO API
- * Wraps the Express app for serverless deployment
+ * Lightweight Netlify Serverless Function for Hackathon DAO API
+ * Uses in-memory data store instead of AgentDB for smaller bundle size
  */
 
 const serverless = require('serverless-http');
 const express = require('express');
-const path = require('path');
-
-// Import DAO modules
-const HackathonDAO = require('../../hackathon-dao/src/core/dao');
 
 const app = express();
-
-// Middleware
 app.use(express.json());
 
-// Initialize DAO (will be cached between invocations)
-let dao;
+// In-memory data store (resets on cold starts)
+let data = {
+  dao: {
+    name: "Global Hackathon Platform",
+    startDate: Date.now() - (30 * 24 * 60 * 60 * 1000),
+    endDate: Date.now() + (60 * 24 * 60 * 60 * 1000)
+  },
+  teams: [],
+  members: [],
+  contributions: [],
+  proposals: [],
+  votes: [],
+  royaltyPools: []
+};
 
-async function getDAO() {
-  if (!dao) {
-    try {
-      console.log('Initializing DAO...');
-      dao = new HackathonDAO({
-        name: "Global Hackathon Platform",
-        startDate: Date.now() - (30 * 24 * 60 * 60 * 1000),
-        endDate: Date.now() + (60 * 24 * 60 * 60 * 1000),
-        filename: ':memory:' // Use in-memory database for serverless
-      });
+// Initialize with sample data
+function initializeSampleData() {
+  if (data.teams.length > 0) return; // Already initialized
 
-      console.log('DAO instance created, initializing database...');
-      await dao.initialize();
-      console.log('DAO initialized successfully');
-
-      // Seed sample data
-      const teams = await dao.teams.listTeams();
-      console.log(`Found ${teams.length} existing teams`);
-      if (teams.length === 0) {
-        console.log('Seeding sample data...');
-        await seedSampleData(dao);
-        console.log('Sample data seeded successfully');
-      }
-    } catch (error) {
-      console.error('Failed to initialize DAO:', error);
-      throw new Error(`DAO initialization failed: ${error.message}`);
-    }
-  }
-  return dao;
-}
-
-async function seedSampleData(dao) {
   // Create teams
-  const team1 = await dao.createTeam({
+  const team1 = {
+    id: 'team_1',
     name: "AI Innovators",
     description: "Building the future of AI",
     maxMembers: 5,
     createdBy: "admin",
-    tags: ['ai', 'ml', 'innovation']
-  });
+    tags: ['ai', 'ml', 'innovation'],
+    createdAt: Date.now() - (7 * 24 * 60 * 60 * 1000),
+    memberCount: 2,
+    totalContributions: 2,
+    totalScore: 430
+  };
 
-  const team2 = await dao.createTeam({
+  const team2 = {
+    id: 'team_2',
     name: "Blockchain Builders",
     description: "Decentralized solutions",
     maxMembers: 4,
     createdBy: "admin",
-    tags: ['blockchain', 'web3']
-  });
+    tags: ['blockchain', 'web3'],
+    createdAt: Date.now() - (5 * 24 * 60 * 60 * 1000),
+    memberCount: 1,
+    totalContributions: 0,
+    totalScore: 0
+  };
 
   // Create members
-  const alice = await dao.registerMember({
+  const alice = {
+    id: 'member_1',
     name: "Alice Johnson",
     email: "alice@example.com",
     wallet: "0x1234567890abcdef1234567890abcdef12345678",
     role: "team_lead",
     skills: ['javascript', 'react', 'nodejs'],
-    github: "alice_j"
-  });
+    github: "alice_j",
+    reputation: 120,
+    joinedAt: Date.now() - (10 * 24 * 60 * 60 * 1000),
+    teams: ['team_1'],
+    totalContributions: 1,
+    totalScore: 300
+  };
 
-  const bob = await dao.registerMember({
+  const bob = {
+    id: 'member_2',
     name: "Bob Smith",
     email: "bob@example.com",
     wallet: "0xabcdef1234567890abcdef1234567890abcdef12",
     role: "member",
     skills: ['python', 'ml', 'data-science'],
-    github: "bob_s"
-  });
+    github: "bob_s",
+    reputation: 100,
+    joinedAt: Date.now() - (8 * 24 * 60 * 60 * 1000),
+    teams: ['team_1'],
+    totalContributions: 1,
+    totalScore: 130
+  };
 
-  const charlie = await dao.registerMember({
+  const charlie = {
+    id: 'member_3',
     name: "Charlie Davis",
     email: "charlie@example.com",
     wallet: "0x234567890abcdef234567890abcdef2345678901",
     role: "member",
     skills: ['rust', 'blockchain', 'smart-contracts'],
-    github: "charlie_d"
-  });
+    github: "charlie_d",
+    reputation: 100,
+    joinedAt: Date.now() - (6 * 24 * 60 * 60 * 1000),
+    teams: ['team_2'],
+    totalContributions: 0,
+    totalScore: 0
+  };
 
-  // Add to teams
-  await dao.addMemberToTeam(alice.id, team1.id);
-  await dao.addMemberToTeam(bob.id, team1.id);
-  await dao.addMemberToTeam(charlie.id, team2.id);
-
-  // Add contributions
-  await dao.trackContribution({
-    teamId: team1.id,
-    memberId: alice.id,
+  // Create contributions
+  const contrib1 = {
+    id: 'contrib_1',
+    teamId: 'team_1',
+    memberId: 'member_1',
     type: 'code',
     description: 'Implemented authentication system',
-    data: { linesAdded: 350, filesChanged: 5, complexity: 4, hasTests: true }
-  });
+    score: 300,
+    verified: true,
+    verifiedBy: 'member_1',
+    timestamp: Date.now() - (3 * 24 * 60 * 60 * 1000),
+    data: {
+      linesAdded: 350,
+      filesChanged: 5,
+      complexity: 4,
+      hasTests: true
+    }
+  };
 
-  await dao.trackContribution({
-    teamId: team1.id,
-    memberId: bob.id,
+  const contrib2 = {
+    id: 'contrib_2',
+    teamId: 'team_1',
+    memberId: 'member_2',
     type: 'research',
     description: 'ML model research',
-    data: { sourcesCount: 10, hasAnalysis: true, isComprehensive: true }
-  });
+    score: 130,
+    verified: true,
+    verifiedBy: 'member_1',
+    timestamp: Date.now() - (2 * 24 * 60 * 60 * 1000),
+    data: {
+      sourcesCount: 10,
+      hasAnalysis: true,
+      isComprehensive: true
+    }
+  };
 
-  // Verify contributions
-  const contributions = await dao.contributions.getContributionsByTeam(team1.id);
-  for (const contrib of contributions) {
-    await dao.contributions.verifyContribution(contrib.id, alice.id);
-  }
+  // Store data
+  data.teams = [team1, team2];
+  data.members = [alice, bob, charlie];
+  data.contributions = [contrib1, contrib2];
+
+  console.log('Sample data initialized');
 }
+
+// Initialize on cold start
+initializeSampleData();
 
 // ============================================================================
 // API ROUTES
 // ============================================================================
 
-// Health check endpoint
+// Health check
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
-    message: 'Hackathon DAO API is running',
+    message: 'Hackathon DAO API Lite is running',
     timestamp: new Date().toISOString(),
-    daoInitialized: !!dao
+    dataInitialized: data.teams.length > 0
   });
 });
 
 // DAO Info
-app.get('/dao', async (req, res) => {
+app.get('/dao', (req, res) => {
   try {
-    const dao = await getDAO();
-    const stats = await dao.getDAOStats();
+    const stats = {
+      ...data.dao,
+      totalTeams: data.teams.length,
+      totalMembers: data.members.length,
+      totalContributions: data.contributions.length,
+      activeProposals: data.proposals.filter(p => p.status === 'active').length,
+      totalRoyaltyPools: data.royaltyPools.length
+    };
     res.json(stats);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -150,155 +180,238 @@ app.get('/dao', async (req, res) => {
 });
 
 // Teams
-app.get('/teams', async (req, res) => {
+app.get('/teams', (req, res) => {
   try {
-    const dao = await getDAO();
-    const teams = await dao.teams.listTeams();
-    res.json(teams);
+    res.json(data.teams);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-// Specific routes must come before parameterized routes
-app.get('/teams/leaderboard', async (req, res) => {
+app.get('/teams/leaderboard', (req, res) => {
   try {
-    const dao = await getDAO();
-    const leaderboard = await dao.teams.getLeaderboard(10);
+    const leaderboard = [...data.teams]
+      .sort((a, b) => b.totalScore - a.totalScore)
+      .slice(0, 10)
+      .map((team, index) => ({
+        rank: index + 1,
+        ...team
+      }));
     res.json(leaderboard);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.post('/teams', async (req, res) => {
+app.post('/teams', (req, res) => {
   try {
-    const dao = await getDAO();
-    const team = await dao.createTeam(req.body);
+    const team = {
+      id: `team_${data.teams.length + 1}`,
+      ...req.body,
+      createdAt: Date.now(),
+      memberCount: 0,
+      totalContributions: 0,
+      totalScore: 0
+    };
+    data.teams.push(team);
     res.status(201).json(team);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
-app.get('/teams/:id/stats', async (req, res) => {
+app.get('/teams/:id', (req, res) => {
   try {
-    const dao = await getDAO();
-    const stats = await dao.teams.getTeamStats(req.params.id);
-    res.json(stats);
+    const team = data.teams.find(t => t.id === req.params.id);
+    if (!team) {
+      return res.status(404).json({ error: 'Team not found' });
+    }
+
+    const members = data.members.filter(m => m.teams.includes(req.params.id));
+    const contributions = data.contributions.filter(c => c.teamId === req.params.id);
+
+    res.json({
+      team,
+      members,
+      contributions,
+      stats: {
+        memberCount: members.length,
+        contributionCount: contributions.length,
+        totalScore: contributions.reduce((sum, c) => sum + c.score, 0)
+      }
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.post('/teams/:teamId/members/:memberId', async (req, res) => {
+app.get('/teams/:id/stats', (req, res) => {
   try {
-    const dao = await getDAO();
-    await dao.addMemberToTeam(req.params.memberId, req.params.teamId);
+    const team = data.teams.find(t => t.id === req.params.id);
+    if (!team) {
+      return res.status(404).json({ error: 'Team not found' });
+    }
+    res.json(team);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/teams/:teamId/members/:memberId', (req, res) => {
+  try {
+    const member = data.members.find(m => m.id === req.params.memberId);
+    const team = data.teams.find(t => t.id === req.params.teamId);
+
+    if (!member || !team) {
+      return res.status(404).json({ error: 'Member or team not found' });
+    }
+
+    if (!member.teams.includes(req.params.teamId)) {
+      member.teams.push(req.params.teamId);
+      team.memberCount++;
+    }
+
     res.json({ success: true });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
-app.get('/teams/:id', async (req, res) => {
-  try {
-    const dao = await getDAO();
-    const dashboard = await dao.getTeamDashboard(req.params.id);
-    res.json(dashboard);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 // Members
-app.get('/members', async (req, res) => {
+app.get('/members', (req, res) => {
   try {
-    const dao = await getDAO();
-    const members = await dao.members.listMembers();
-    res.json(members);
+    res.json(data.members);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-// Specific routes must come before parameterized routes
-app.get('/members/leaderboard', async (req, res) => {
+app.get('/members/leaderboard', (req, res) => {
   try {
-    const dao = await getDAO();
-    const leaderboard = await dao.members.getLeaderboard(10);
+    const leaderboard = [...data.members]
+      .sort((a, b) => b.totalScore - a.totalScore)
+      .slice(0, 10)
+      .map((member, index) => ({
+        rank: index + 1,
+        ...member
+      }));
     res.json(leaderboard);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.post('/members', async (req, res) => {
+app.post('/members', (req, res) => {
   try {
-    const dao = await getDAO();
-    const member = await dao.registerMember(req.body);
+    const member = {
+      id: `member_${data.members.length + 1}`,
+      ...req.body,
+      reputation: 100,
+      joinedAt: Date.now(),
+      teams: [],
+      totalContributions: 0,
+      totalScore: 0
+    };
+    data.members.push(member);
     res.status(201).json(member);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
-app.get('/members/:id', async (req, res) => {
+app.get('/members/:id', (req, res) => {
   try {
-    const dao = await getDAO();
-    const dashboard = await dao.getMemberDashboard(req.params.id);
-    res.json(dashboard);
+    const member = data.members.find(m => m.id === req.params.id);
+    if (!member) {
+      return res.status(404).json({ error: 'Member not found' });
+    }
+
+    const contributions = data.contributions.filter(c => c.memberId === req.params.id);
+    const teams = data.teams.filter(t => member.teams.includes(t.id));
+
+    res.json({
+      member,
+      teams,
+      contributions,
+      stats: {
+        teamCount: teams.length,
+        contributionCount: contributions.length,
+        totalScore: contributions.reduce((sum, c) => sum + c.score, 0)
+      }
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
 // Contributions
-app.get('/contributions', async (req, res) => {
+app.get('/contributions', (req, res) => {
   try {
-    const dao = await getDAO();
-    const contributions = await dao.contributions.listContributions({ limit: 100 });
+    const contributions = data.contributions.slice(0, 100);
     res.json(contributions);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.get('/contributions/team/:teamId', async (req, res) => {
+app.get('/contributions/team/:teamId', (req, res) => {
   try {
-    const dao = await getDAO();
-    const contributions = await dao.contributions.getContributionsByTeam(req.params.teamId);
+    const contributions = data.contributions.filter(c => c.teamId === req.params.teamId);
     res.json(contributions);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.get('/contributions/member/:memberId', async (req, res) => {
+app.get('/contributions/member/:memberId', (req, res) => {
   try {
-    const dao = await getDAO();
-    const contributions = await dao.contributions.getContributionsByMember(req.params.memberId);
+    const contributions = data.contributions.filter(c => c.memberId === req.params.memberId);
     res.json(contributions);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.post('/contributions', async (req, res) => {
+app.post('/contributions', (req, res) => {
   try {
-    const dao = await getDAO();
-    const contribution = await dao.trackContribution(req.body);
+    const contribution = {
+      id: `contrib_${data.contributions.length + 1}`,
+      ...req.body,
+      score: calculateScore(req.body.type, req.body.data),
+      verified: false,
+      timestamp: Date.now()
+    };
+    data.contributions.push(contribution);
+
+    // Update team and member stats
+    const team = data.teams.find(t => t.id === contribution.teamId);
+    const member = data.members.find(m => m.id === contribution.memberId);
+    if (team) {
+      team.totalContributions++;
+      team.totalScore += contribution.score;
+    }
+    if (member) {
+      member.totalContributions++;
+      member.totalScore += contribution.score;
+    }
+
     res.status(201).json(contribution);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
-app.post('/contributions/:id/verify', async (req, res) => {
+app.post('/contributions/:id/verify', (req, res) => {
   try {
-    const dao = await getDAO();
-    const { verifierId } = req.body;
-    const contribution = await dao.contributions.verifyContribution(req.params.id, verifierId);
+    const contribution = data.contributions.find(c => c.id === req.params.id);
+    if (!contribution) {
+      return res.status(404).json({ error: 'Contribution not found' });
+    }
+
+    contribution.verified = true;
+    contribution.verifiedBy = req.body.verifierId;
+    contribution.verifiedAt = Date.now();
+
     res.json(contribution);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -306,97 +419,154 @@ app.post('/contributions/:id/verify', async (req, res) => {
 });
 
 // Proposals
-app.get('/proposals', async (req, res) => {
+app.get('/proposals', (req, res) => {
   try {
-    const dao = await getDAO();
-    const proposals = await dao.proposals.getActiveProposals();
-    res.json(proposals);
+    const activeProposals = data.proposals.filter(p => p.status === 'active');
+    res.json(activeProposals);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.get('/proposals/:id', async (req, res) => {
+app.get('/proposals/:id', (req, res) => {
   try {
-    const dao = await getDAO();
-    const proposal = await dao.proposals.getProposal(req.params.id);
-    const stats = await dao.proposals.getProposalStats(req.params.id);
-    const votes = await dao.voting.getProposalVotesWithDetails(req.params.id);
+    const proposal = data.proposals.find(p => p.id === req.params.id);
+    if (!proposal) {
+      return res.status(404).json({ error: 'Proposal not found' });
+    }
+
+    const votes = data.votes.filter(v => v.proposalId === req.params.id);
+    const stats = {
+      totalVotes: votes.length,
+      votesFor: votes.filter(v => v.vote === 'for').length,
+      votesAgainst: votes.filter(v => v.vote === 'against').length,
+      votesAbstain: votes.filter(v => v.vote === 'abstain').length
+    };
+
     res.json({ proposal, stats, votes });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.post('/proposals', async (req, res) => {
+app.post('/proposals', (req, res) => {
   try {
-    const dao = await getDAO();
-    const proposal = await dao.createProposal(req.body);
+    const proposal = {
+      id: `proposal_${data.proposals.length + 1}`,
+      ...req.body,
+      status: 'active',
+      createdAt: Date.now()
+    };
+    data.proposals.push(proposal);
     res.status(201).json(proposal);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
-app.post('/proposals/:id/vote', async (req, res) => {
+app.post('/proposals/:id/vote', (req, res) => {
   try {
-    const dao = await getDAO();
-    const { voterId, vote, reason } = req.body;
-    const result = await dao.vote(req.params.id, voterId, vote, reason);
-    res.json(result);
+    const proposal = data.proposals.find(p => p.id === req.params.id);
+    if (!proposal) {
+      return res.status(404).json({ error: 'Proposal not found' });
+    }
+
+    const vote = {
+      id: `vote_${data.votes.length + 1}`,
+      proposalId: req.params.id,
+      voterId: req.body.voterId,
+      vote: req.body.vote,
+      reason: req.body.reason,
+      weight: 1.0,
+      timestamp: Date.now()
+    };
+    data.votes.push(vote);
+
+    res.json(vote);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
 // Royalties
-app.get('/royalties/team/:teamId', async (req, res) => {
+app.get('/royalties/team/:teamId', (req, res) => {
   try {
-    const dao = await getDAO();
-    const pools = await dao.royalty.getTeamRoyaltyPools(req.params.teamId);
+    const pools = data.royaltyPools.filter(p => p.teamId === req.params.teamId);
     res.json(pools);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.get('/royalties/member/:memberId', async (req, res) => {
+app.get('/royalties/member/:memberId', (req, res) => {
   try {
-    const dao = await getDAO();
-    const royalties = await dao.royalty.getMemberTotalRoyalties(req.params.memberId);
+    const royalties = {
+      memberId: req.params.memberId,
+      totalEarned: 0,
+      pools: []
+    };
     res.json(royalties);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.get('/royalties/pool/:poolId', async (req, res) => {
+app.get('/royalties/pool/:poolId', (req, res) => {
   try {
-    const dao = await getDAO();
-    const report = await dao.royalty.getDistributionReport(req.params.poolId);
-    res.json(report);
+    const pool = data.royaltyPools.find(p => p.id === req.params.poolId);
+    if (!pool) {
+      return res.status(404).json({ error: 'Royalty pool not found' });
+    }
+    res.json(pool);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.post('/royalties/distribute', async (req, res) => {
+app.post('/royalties/distribute', (req, res) => {
   try {
-    const dao = await getDAO();
-    const { teamId, amount, ...options } = req.body;
-    const result = await dao.distributeRoyalties(teamId, amount, options);
-    res.status(201).json(result);
+    const pool = {
+      id: `pool_${data.royaltyPools.length + 1}`,
+      teamId: req.body.teamId,
+      amount: req.body.amount,
+      model: req.body.model || 'linear',
+      status: 'pending',
+      createdAt: Date.now()
+    };
+    data.royaltyPools.push(pool);
+    res.status(201).json({ pool });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
+// Helper functions
+function calculateScore(type, data) {
+  switch (type) {
+    case 'code':
+      return Math.min((data.linesAdded || 0) * 0.5, 200) +
+             (data.complexity || 1) * 20 +
+             (data.filesChanged || 1) * 10 +
+             (data.hasTests ? 30 : 0) +
+             (data.hasDocumentation ? 20 : 0);
+    case 'research':
+      return (data.sourcesCount || 1) * 10 +
+             (data.hasAnalysis ? 30 : 0) +
+             (data.isComprehensive ? 20 : 0);
+    case 'review':
+      return (data.filesReviewed || 1) * 5 +
+             (data.commentsCount || 1) * 3 +
+             (data.isDetailed ? 20 : 0);
+    default:
+      return 50;
+  }
+}
+
 // Error handler
 app.use((err, req, res, next) => {
   console.error('Error:', err);
   res.status(500).json({
-    error: err.message,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    error: err.message
   });
 });
 
@@ -404,6 +574,9 @@ app.use((err, req, res, next) => {
 const handler = serverless(app);
 
 exports.handler = async (event, context) => {
+  // Re-initialize data on cold starts
+  initializeSampleData();
+
   try {
     return await handler(event, context);
   } catch (error) {
@@ -411,7 +584,7 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        error: 'Function initialization error',
+        error: 'Function error',
         message: error.message
       })
     };

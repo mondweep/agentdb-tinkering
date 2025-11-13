@@ -18,8 +18,6 @@
 
 [functions]
   node_bundler = "esbuild"
-  included_files = ["hackathon-dao/src/**"]
-  external_node_modules = ["agentdb", "express", "serverless-http"]
 
 [[headers]]
   for = "/*"

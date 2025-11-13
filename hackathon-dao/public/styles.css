@@ -609,3 +609,48 @@ tr:hover {
   margin-bottom: 0.5rem;
   color: var(--dark);
 }
+
+/* Footer */
+.footer {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer p {
+  margin: 0;
+  color: var(--gray);
+  font-size: 0.875rem;
+}
+
+.footer strong {
+  color: var(--dark);
+  font-weight: 600;
+}
+
+.footer a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.footer .license {
+  color: var(--gray);
+  font-size: 0.875rem;
+}

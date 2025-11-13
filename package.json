@@ -17,10 +17,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@netlify/functions": "^5.1.0",
     "agentdb": "^1.6.1",
     "claude-flow": "^2.7.35",
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "research-swarm": "^1.2.2"
+    "research-swarm": "^1.2.2",
+    "serverless-http": "^4.0.0"
   }
 }

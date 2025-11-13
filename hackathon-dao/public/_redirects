@@ -1,0 +1,7 @@
+# Netlify redirects for Hackathon DAO SPA
+
+# API routes go to serverless function
+/api/*  /.netlify/functions/api/:splat  200
+
+# Everything else goes to index.html for client-side routing
+/*      /index.html                      200

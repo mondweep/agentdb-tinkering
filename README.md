@@ -6,7 +6,31 @@ A practical, project-based learning portfolio demonstrating hands-on experience 
 
 This repository documents a structured learning journey through 8 progressive modules, from web fundamentals to advanced AI integration with AgentDB. The approach emphasizes **learning by building** - each module is a real, working project that builds upon previous knowledge.
 
-## 🚀 Live Portfolio
+## 🚀 Featured Project: Hackathon DAO
+
+**NEW!** A complete Decentralized Autonomous Organization (DAO) system for managing global hackathons with transparent contribution tracking and automated royalty distribution.
+
+### 🌟 Live Demo
+- **Web App**: Deploy to Netlify in 5 minutes! See [DEPLOY_QUICK_START.md](./DEPLOY_QUICK_START.md)
+- **Local**: `npm start` → http://localhost:3000
+
+### 🎯 Key Features
+- ✅ **Web UI**: Modern responsive interface with dashboard, teams, members, contributions, governance, and royalties
+- ✅ **REST API**: 30+ endpoints for complete DAO operations
+- ✅ **Contribution Tracking**: 8 types with automatic scoring
+- ✅ **DAO Governance**: Weighted voting with auto-finalization
+- ✅ **Royalty Engine**: 4 distribution models (linear, weighted, milestone, hybrid)
+- ✅ **AgentDB Integration**: Vector database with sql.js WASM backend
+- ✅ **Netlify Ready**: One-click serverless deployment
+
+### 📚 Documentation
+- [Web UI Guide](./hackathon-dao/WEB_UI_README.md)
+- [API Documentation](./hackathon-dao/API.md)
+- [Integration Guide](./hackathon-dao/INTEGRATION_GUIDE.md)
+- [Netlify Deployment](./NETLIFY_DEPLOYMENT.md)
+- [Quick Deploy](./DEPLOY_QUICK_START.md)
+
+### 🚀 Live Portfolio
 
 View the portfolio website: [AgentDB Learning Portfolio](https://mondweep.github.io/agentdb-tinkering)
 

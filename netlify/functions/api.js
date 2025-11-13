@@ -139,11 +139,12 @@ app.get('/teams', async (req, res) => {
   }
 });
 
-app.get('/teams/:id', async (req, res) => {
+// Specific routes must come before parameterized routes
+app.get('/teams/leaderboard', async (req, res) => {
   try {
     const dao = await getDAO();
-    const dashboard = await dao.getTeamDashboard(req.params.id);
-    res.json(dashboard);
+    const leaderboard = await dao.teams.getLeaderboard(10);
+    res.json(leaderboard);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -179,11 +180,11 @@ app.post('/teams/:teamId/members/:memberId', async (req, res) => {
   }
 });
 
-app.get('/teams/leaderboard', async (req, res) => {
+app.get('/teams/:id', async (req, res) => {
   try {
     const dao = await getDAO();
-    const leaderboard = await dao.teams.getLeaderboard(10);
-    res.json(leaderboard);
+    const dashboard = await dao.getTeamDashboard(req.params.id);
+    res.json(dashboard);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -200,11 +201,12 @@ app.get('/members', async (req, res) => {
   }
 });
 
-app.get('/members/:id', async (req, res) => {
+// Specific routes must come before parameterized routes
+app.get('/members/leaderboard', async (req, res) => {
   try {
     const dao = await getDAO();
-    const dashboard = await dao.getMemberDashboard(req.params.id);
-    res.json(dashboard);
+    const leaderboard = await dao.members.getLeaderboard(10);
+    res.json(leaderboard);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -220,11 +222,11 @@ app.post('/members', async (req, res) => {
   }
 });
 
-app.get('/members/leaderboard', async (req, res) => {
+app.get('/members/:id', async (req, res) => {
   try {
     const dao = await getDAO();
-    const leaderboard = await dao.members.getLeaderboard(10);
-    res.json(leaderboard);
+    const dashboard = await dao.getMemberDashboard(req.params.id);
+    res.json(dashboard);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

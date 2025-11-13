@@ -138,10 +138,11 @@ app.get('/api/teams', async (req, res) => {
   }
 });
 
-app.get('/api/teams/:id', async (req, res) => {
+// Specific routes must come before parameterized routes
+app.get('/api/teams/leaderboard', async (req, res) => {
   try {
-    const dashboard = await dao.getTeamDashboard(req.params.id);
-    res.json(dashboard);
+    const leaderboard = await dao.teams.getLeaderboard(10);
+    res.json(leaderboard);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -174,10 +175,10 @@ app.post('/api/teams/:teamId/members/:memberId', async (req, res) => {
   }
 });
 
-app.get('/api/teams/leaderboard', async (req, res) => {
+app.get('/api/teams/:id', async (req, res) => {
   try {
-    const leaderboard = await dao.teams.getLeaderboard(10);
-    res.json(leaderboard);
+    const dashboard = await dao.getTeamDashboard(req.params.id);
+    res.json(dashboard);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -193,10 +194,11 @@ app.get('/api/members', async (req, res) => {
   }
 });
 
-app.get('/api/members/:id', async (req, res) => {
+// Specific routes must come before parameterized routes
+app.get('/api/members/leaderboard', async (req, res) => {
   try {
-    const dashboard = await dao.getMemberDashboard(req.params.id);
-    res.json(dashboard);
+    const leaderboard = await dao.members.getLeaderboard(10);
+    res.json(leaderboard);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -211,10 +213,10 @@ app.post('/api/members', async (req, res) => {
   }
 });
 
-app.get('/api/members/leaderboard', async (req, res) => {
+app.get('/api/members/:id', async (req, res) => {
   try {
-    const leaderboard = await dao.members.getLeaderboard(10);
-    res.json(leaderboard);
+    const dashboard = await dao.getMemberDashboard(req.params.id);
+    res.json(dashboard);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
